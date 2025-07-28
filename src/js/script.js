@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `*Merk & Tipe HP:* ${merk}\n` +
         `*Keluhan:* ${keluhan}\n` +
         `*Kronologi Sebelum Rusak:* ${kronologi}\n\n` +
-        `Saya akan mengirimkan *foto kondisi HP* di chat ini. Terima kasih.`;
+        `Saya akan mengirimkan *foto HP* di chat ini. Terima kasih.`;
 
       const nomorTujuan = "6287715970798";
 
