@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pilih Paket Data</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white rounded-2xl shadow-lg p-6 w-80 text-center">
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Pilih Paket Data</h2>
+
+    <!-- Gambar Paket -->
+    <div class="relative flex justify-center">
+      <img id="paket-img" 
+           src="src/img/rfixstore/axis-bronet/1.png" 
+           alt="Gambar Paket"
+           class="w-40 h-40 rounded-xl object-cover shadow-md transition-all duration-300">
+    </div>
+
+    <!-- Dropdown -->
+    <select id="paket-select" 
+            class="mt-4 w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-gray-700">
+      <option value="">-- Pilih Paket --</option>
+      <option value="3">Paket 3 GB</option>
+      <option value="5">Paket 5 GB</option>
+      <option value="10">Paket 10 GB</option>
+    </select>
+
+    <!-- Harga -->
+    <div id="paket-harga" class="mt-4 text-lg font-semibold text-blue-600">
+      Harga: -
+    </div>
+
+    <!-- Tombol Checkout -->
+    <button id="checkout-btn"
+            class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-all duration-200 hidden">
+      Checkout
+    </button>
+  </div>
+
+  <script>
+    const paketSelect = document.getElementById('paket-select');
+    const paketImg = document.getElementById('paket-img');
+    const paketHarga = document.getElementById('paket-harga');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    const paketData = {
+      3: {
+        harga: 'Rp15.000',
+        gambar: 'src/img/rfixstore/axis-bronet/2.png'
+      },
+      5: {
+        harga: 'Rp25.000',
+        gambar: 'src/img/rfixstore/axis-bronet/3.png'
+      },
+      10: {
+        harga: 'Rp45.000',
+        gambar: 'src/img/rfixstore/axis-bronet/4.png'
+      }
+    };
+
+    paketSelect.addEventListener('change', () => {
+      const value = paketSelect.value;
+
+      paketImg.classList.add('opacity-0', 'scale-95');
+      setTimeout(() => {
+        if (paketData[value]) {
+          paketImg.src = paketData[value].gambar;
+          paketHarga.textContent = `Harga: ${paketData[value].harga}`;
+          checkoutBtn.classList.remove('hidden');
+        } else {
+          paketImg.src = 'src/img/rfixstore/axis-bronet/1.png';
+          paketHarga.textContent = 'Harga: -';
+          checkoutBtn.classList.add('hidden');
+        }
+        paketImg.classList.remove('opacity-0', 'scale-95');
+        paketImg.classList.add('opacity-100', 'scale-100');
+      }, 200);
+    });
+
+    checkoutBtn.addEventListener('click', () => {
+      const value = paketSelect.value;
+      if (paketData[value]) {
+        alert(`Anda memilih ${value}GB dengan harga ${paketData[value].harga}\nLanjut ke checkout...`);
+        // Contoh: arahkan ke WhatsApp
+        // window.open(`https://wa.me/628xxxxxxx?text=Saya ingin membeli paket ${value}GB seharga ${paketData[value].harga}`);
+      }
+    });
+  </script>
+
+</body>
+</html>

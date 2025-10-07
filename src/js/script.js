@@ -3,6 +3,7 @@ window.onscroll = function () {
     const header = document.querySelector("header");
     const fixedNav = header.offsetTop;
     const toTop = document.querySelector("#to-top");
+    const whatsappToggle = document.querySelector("#whatsapp-toggle");
 
     if (window.pageYOffset > fixedNav) {
         header.classList.add("navbar-fixed");
@@ -12,6 +13,16 @@ window.onscroll = function () {
         header.classList.remove("navbar-fixed");
         toTop.classList.remove("flex");
         toTop.classList.add("hidden");
+    }
+
+    if (window.pageYOffset > fixedNav) {
+        header.classList.add("navbar-fixed");
+        whatsappToggle.classList.remove("hidden");
+        whatsappToggle.classList.add("flex");
+    } else {
+        header.classList.remove("navbar-fixed");
+        whatsappToggle.classList.remove("flex");
+        whatsappToggle.classList.add("hidden");
     }
 };
 
@@ -167,5 +178,56 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 });
+
+// Product
+document.addEventListener("DOMContentLoaded", () => {
+      const productCards = document.querySelectorAll(".product-card");
+
+      productCards.forEach(card => {
+        const select = card.querySelector(".paket-select");
+        const img = card.querySelector(".paket-img");
+        const harga = card.querySelector(".paket-harga");
+        const checkoutBtn = card.querySelector(".checkout-btn");
+
+        const defaultImg = card.dataset.defaultImg || "src/img/rfixstore/default.png";
+        img.src = defaultImg;
+        harga.textContent = "Harga: -";
+        checkoutBtn.classList.add("hidden");
+
+        select.addEventListener("change", () => {
+          const selectedOption = select.options[select.selectedIndex];
+          const gambar = selectedOption.getAttribute("data-gambar");
+          const hargaValue = selectedOption.getAttribute("data-harga");
+
+          img.classList.add("opacity-0", "scale-95");
+          setTimeout(() => {
+            if (gambar && hargaValue) {
+              img.src = gambar;
+              harga.textContent = `Harga: ${hargaValue}`;
+              checkoutBtn.classList.remove("hidden");
+            } else {
+              img.src = defaultImg;
+              harga.textContent = "Harga: -";
+              checkoutBtn.classList.add("hidden");
+            }
+            img.classList.remove("opacity-0", "scale-95");
+            img.classList.add("opacity-100", "scale-100");
+          }, 200);
+        });
+
+        checkoutBtn.addEventListener("click", () => {
+          const selectedOption = select.options[select.selectedIndex];
+          const paket = selectedOption.text;
+          const hargaValue = selectedOption.getAttribute("data-harga");
+          const namaProduk = card.querySelector("h2").textContent;
+
+          alert(`Anda memilih ${namaProduk} - ${paket} dengan harga ${hargaValue}\nLanjut ke checkout...`);
+
+          // Contoh arahkan ke WhatsApp otomatis:
+          // const nomor = "628xxxxxxx";
+          // window.open(`https://wa.me/${nomor}?text=Halo, saya ingin membeli paket ${namaProduk} ${paket} (${hargaValue})`);
+        });
+      });
+    });
 
 
